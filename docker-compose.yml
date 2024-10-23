@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: my_docker_user
+      POSTGRES_PASSWORD: my_docker_password
+      POSTGRES_DB: my_database
+    ports:
+      - "5433:5432"  # 容器外使用5433端口，映射到容器内的5432端口
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/my_database
+      SPRING_DATASOURCE_USERNAME: my_docker_user
+      SPRING_DATASOURCE_PASSWORD: my_docker_password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend  # 前端项目的 Dockerfile 所在位置
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend  # 前端依赖后端
+    networks:
+      - app-network
+
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+
