@@ -47,15 +47,17 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const AddTask = ({ userId, onTaskAdded }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
   const [error, setError] = useState('');
   const theme = useTheme();
 
   const handleCreateTask = async (e) => {
     e.preventDefault();
     try {
-      await createTask(title, description, userId);
+      await createTask(title, description, dueDate, userId);
       setTitle('');
       setDescription('');
+      setDueDate('');
       onTaskAdded();
     } catch (err) {
       setError('Failed to create task');
@@ -142,6 +144,39 @@ const AddTask = ({ userId, onTaskAdded }) => {
                   : 'rgba(0, 0, 0, 0.7)',
               },
               '& textarea': {
+                color: theme.palette.mode === 'dark'
+                  ? '#fff'
+                  : '#000',
+              }
+            }}
+          />
+          <TextField
+            label="Due Date"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            fullWidth
+            required
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{ 
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.mode === 'dark' 
+                  ? 'rgba(255, 255, 255, 0.05)'
+                  : 'rgba(255, 255, 255, 0.5)',
+                '& fieldset': {
+                  borderColor: theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.2)'
+                    : 'rgba(0, 0, 0, 0.2)',
+                },
+              },
+              '& label': {
+                color: theme.palette.mode === 'dark'
+                  ? 'rgba(255, 255, 255, 0.7)'
+                  : 'rgba(0, 0, 0, 0.7)',
+              },
+              '& input': {
                 color: theme.palette.mode === 'dark'
                   ? '#fff'
                   : '#000',

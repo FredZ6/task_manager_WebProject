@@ -3,7 +3,7 @@ import { updateTask, deleteTask } from '../services/api';
 import { TextField, Button, Card, CardContent, Typography, Box, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-const GlassCard = styled(Card)(({ theme }) => ({
+const GlassCard = styled(Card)(({ theme, category }) => ({
   background: theme.palette.mode === 'dark' 
     ? 'rgba(255, 255, 255, 0.05)'
     : 'rgba(255, 255, 255, 0.7)',
@@ -15,9 +15,25 @@ const GlassCard = styled(Card)(({ theme }) => ({
       : 'rgba(255, 255, 255, 0.2)'
   }`,
   transition: 'transform 0.2s ease-in-out',
+  position: 'relative',
   
   '&:hover': {
     transform: 'translateY(-3px)',
+  },
+
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: '4px',
+    borderRadius: '4px 0 0 4px',
+    background: 
+      category === 'overdue' ? '#f44336' :
+      category === 'dueToday' ? '#ff9800' :
+      category === 'upcoming' ? '#4caf50' :
+      'transparent'
   }
 }));
 
@@ -32,7 +48,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-const TaskItem = ({ task, onTaskUpdate, onTaskDelete }) => {
+const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
@@ -60,7 +76,7 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete }) => {
   };
 
   return (
-    <GlassCard sx={{ mb: 2 }}>
+    <GlassCard sx={{ mb: 2 }} category={category}>
       <CardContent>
         {isEditing ? (
           <form onSubmit={handleUpdate}>
@@ -210,6 +226,26 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete }) => {
             }}>
               {task.title}
             </Typography>
+            {task.dueDate && (
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  color: 
+                    category === 'overdue' ? '#f44336' :
+                    category === 'dueToday' ? '#ff9800' :
+                    category === 'upcoming' ? '#4caf50' :
+                    theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)',
+                  display: 'block',
+                  mb: 1
+                }}
+              >
+                {category === 'overdue' && 'Overdue'}
+                {category === 'dueToday' && 'Due Today'}
+                {category === 'upcoming' && 'Coming Up'}
+                {' - '}
+                {new Date(task.dueDate).toLocaleDateString()}
+              </Typography>
+            )}
             <Typography variant="body2" sx={{ 
               color: theme.palette.mode === 'dark' 
                 ? 'rgba(255, 255, 255, 0.7)' 
@@ -217,14 +253,6 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete }) => {
               mb: 1
             }}>
               {task.description}
-            </Typography>
-            <Typography variant="body2" sx={{ 
-              color: theme.palette.mode === 'dark' 
-                ? 'rgba(255, 255, 255, 0.7)' 
-                : 'rgba(0, 0, 0, 0.7)',
-              mb: 2
-            }}>
-              <strong>Due Date: </strong>{dueDate}
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <StyledButton 

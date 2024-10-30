@@ -15,8 +15,8 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public Task createTask(String title, String description, User user) {
-        Task task = new Task(title, description, null, user);
+    public Task createTask(String title, String description, LocalDate dueDate, User user) {
+        Task task = new Task(title, description, dueDate, user);
         return taskRepository.save(task);
     }
 

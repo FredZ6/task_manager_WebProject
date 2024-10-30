@@ -25,21 +25,18 @@ public class TaskController {
     private UserService userService;
 
     // 创建任务
-//    @PostMapping("/create")
-//    public Task createTask(@RequestParam String title,
-//                           @RequestParam String description,
-//                           @RequestParam Long userId) {
-//        User user = userService.findById(userId);
-//        return taskService.createTask(title, description, user);
-//    }
     @PostMapping("/create")
     public Task createTask(@RequestBody Map<String, Object> requestBody) {
         String title = (String) requestBody.get("title");
         String description = (String) requestBody.get("description");
+        String dueDateStr = (String) requestBody.get("dueDate");  // 获取日期字符串
         Long userId = Long.valueOf(requestBody.get("userId").toString());
+        
+        // 转换日期字符串为 LocalDate
+        LocalDate dueDate = dueDateStr != null ? LocalDate.parse(dueDateStr) : null;
+        
         User user = userService.findById(userId);
-
-        return taskService.createTask(title, description, user);
+        return taskService.createTask(title, description, dueDate, user);
     }
 
     // 获取指定用户的所有任务

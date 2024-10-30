@@ -121,6 +121,36 @@ const TaskList = ({ toggleTheme }) => {
     navigate('/login');
   };
 
+  const sortAndCategoryTasks = (tasks) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return tasks.sort((a, b) => {
+      const dateA = a.dueDate ? new Date(a.dueDate) : new Date('9999-12-31');
+      const dateB = b.dueDate ? new Date(b.dueDate) : new Date('9999-12-31');
+      return dateA - dateB;
+    }).reduce((acc, task) => {
+      const dueDate = task.dueDate ? new Date(task.dueDate) : null;
+      
+      if (!dueDate) {
+        acc.noDueDate.push(task);
+      } else if (dueDate < today) {
+        acc.overdue.push(task);
+      } else if (dueDate.toDateString() === today.toDateString()) {
+        acc.dueToday.push(task);
+      } else {
+        acc.upcoming.push(task);
+      }
+      
+      return acc;
+    }, {
+      overdue: [],
+      dueToday: [],
+      upcoming: [],
+      noDueDate: []
+    });
+  };
+
   return (
     <GlassContainer component="main" maxWidth="md">
       <GlassAppBar position="static">
@@ -217,21 +247,45 @@ const TaskList = ({ toggleTheme }) => {
               backgroundColor: 'rgba(0,0,0,0.02)',
               borderRadius: 2
             }}>
-              <Typography variant="body1" sx={{
-                color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666'
-              }}>
+              <Typography variant="body1">
                 No tasks yet. Start by adding a new task!
               </Typography>
             </Box>
           ) : (
-            tasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onTaskUpdate={handleTaskUpdate}
-                onTaskDelete={handleTaskDelete}
-              />
-            ))
+            <>
+              {Object.entries(sortAndCategoryTasks(tasks)).map(([category, categoryTasks]) => (
+                categoryTasks.length > 0 && (
+                  <Box key={category} sx={{ mb: 3 }}>
+                    <Typography 
+                      variant="h6" 
+                      sx={{ 
+                        mb: 2,
+                        color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+                        textTransform: 'uppercase',
+                        fontSize: '0.9rem',
+                        letterSpacing: '1px',
+                        fontWeight: 600,
+                        opacity: 0.8
+                      }}
+                    >
+                      {category === 'overdue' && 'Overdue Tasks'}
+                      {category === 'dueToday' && 'Due Today'}
+                      {category === 'upcoming' && 'Upcoming'}
+                      {category === 'noDueDate' && 'No Due Date'}
+                    </Typography>
+                    {categoryTasks.map((task) => (
+                      <TaskItem
+                        key={task.id}
+                        task={task}
+                        onTaskUpdate={handleTaskUpdate}
+                        onTaskDelete={handleTaskDelete}
+                        category={category}
+                      />
+                    ))}
+                  </Box>
+                )
+              ))}
+            </>
           )}
         </List>
       </GlassBox>

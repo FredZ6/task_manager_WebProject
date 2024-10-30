@@ -14,9 +14,14 @@ export const getTasks = (userId) => {
   return axios.get(`${API_URL}/tasks/${userId}`);
 };
 
-export const createTask = (title, description, userId) => {
-    return axios.post(`${API_URL}/tasks/create`, { title, description, userId });
-  };
+export const createTask = (title, description, dueDate, userId) => {
+    return axios.post(`${API_URL}/tasks/create`, { 
+        title, 
+        description, 
+        dueDate, 
+        userId 
+    });
+};
 
 export const deleteTask = (taskId) => {
   return axios.delete(`${API_URL}/tasks/${taskId}`);
