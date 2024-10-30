@@ -10,8 +10,7 @@ import { styled } from '@mui/material/styles';
 const GlassContainer = styled(Container)`
   position: relative;
   min-height: 100vh;
-  padding-bottom: 2rem;
-  padding-top: 16px;
+  padding: 16px 24px;
   
   &:before {
     content: '';
@@ -41,9 +40,8 @@ const GlassAppBar = styled(AppBar)`
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 16px;
-  width: calc(100% - 32px) !important;
-  margin: 0 auto !important;
   position: relative !important;
+  width: 100% !important;
 `;
 
 const TaskList = () => {
@@ -79,7 +77,7 @@ const TaskList = () => {
   };
 
   return (
-    <GlassContainer component="main" maxWidth="md" disableGutters>
+    <GlassContainer component="main" maxWidth="md">
       <GlassAppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ 
