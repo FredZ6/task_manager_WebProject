@@ -2,8 +2,8 @@ package com.example.project1taskmanager.controller;
 
 
 
-import com.example.project1taskmanager.model.Task;
-import com.example.project1taskmanager.model.User;
+import com.example.project1taskmanager.entity.Task;
+import com.example.project1taskmanager.entity.User;
 import com.example.project1taskmanager.service.TaskService;
 import com.example.project1taskmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

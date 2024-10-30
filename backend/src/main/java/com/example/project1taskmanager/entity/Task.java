@@ -1,4 +1,4 @@
-package com.example.project1taskmanager.model;
+package com.example.project1taskmanager.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

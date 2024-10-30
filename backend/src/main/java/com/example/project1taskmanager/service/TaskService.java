@@ -1,7 +1,7 @@
 package com.example.project1taskmanager.service;
 
-import com.example.project1taskmanager.model.Task;
-import com.example.project1taskmanager.model.User;
+import com.example.project1taskmanager.entity.Task;
+import com.example.project1taskmanager.entity.User;
 import com.example.project1taskmanager.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

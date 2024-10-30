@@ -1,14 +1,15 @@
 package com.example.project1taskmanager.repository;
 
-import com.example.project1taskmanager.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.example.project1taskmanager.entity.Task;
 
 import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    // 根据用户ID查找任务
+    // find tasks by user ID
     List<Task> findByUserId(Long userId);
 }
