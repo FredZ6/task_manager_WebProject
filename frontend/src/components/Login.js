@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { loginUser } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 import { 
   TextField, 
   Button, 
@@ -23,37 +24,44 @@ import {
   PersonOutline,
   LoginOutlined
 } from '@mui/icons-material';
+import ThemeToggle from './ThemeToggle';
 
-const GlassContainer = styled(Container)`
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  background: #ffffff;
-  padding-top: 15vh;
-`;
+const GlassContainer = styled(Container)(({ theme }) => ({
+  minHeight: '100vh',
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  background: theme.palette.mode === 'dark' ? '#121212' : '#ffffff',
+  paddingTop: '15vh'
+}));
 
-const GlassBox = styled(Paper)`
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-  overflow: hidden;
+const GlassBox = styled(Paper)(({ theme }) => ({
+  background: theme.palette.background.paper,
+  borderRadius: '16px',
+  padding: '2.5rem',
+  boxShadow: theme.palette.mode === 'dark' 
+    ? '0 8px 32px rgba(0, 0, 0, 0.3)'
+    : '0 8px 32px rgba(0, 0, 0, 0.08)',
+  border: `1px solid ${
+    theme.palette.mode === 'dark' 
+      ? 'rgba(255, 255, 255, 0.05)'
+      : 'rgba(0, 0, 0, 0.05)'
+  }`,
+  width: '100%',
+  maxWidth: '400px',
+  position: 'relative',
+  overflow: 'hidden',
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #2196F3, #E91E63);
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '4px',
+    background: 'linear-gradient(90deg, #2196F3, #E91E63)',
   }
-`;
+}));
 
 const StyledButton = styled(Button)`
   background: linear-gradient(45deg, #2196F3, #1976D2);
@@ -67,12 +75,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Login = () => {
+const Login = ({ toggleTheme }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -87,6 +96,13 @@ const Login = () => {
 
   return (
     <GlassContainer>
+      <Box sx={{ 
+        position: 'absolute', 
+        top: 16, 
+        right: 16 
+      }}>
+        <ThemeToggle toggleTheme={toggleTheme} />
+      </Box>
       <Fade in={true} timeout={1000}>
         <GlassBox elevation={0}>
           <Box sx={{ 
@@ -117,7 +133,9 @@ const Login = () => {
               }}>
               Welcome Back
             </Typography>
-            <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+            <Typography variant="body2" sx={{ 
+              color: theme.palette.mode === 'dark' ? '#fff' : '#666'
+            }}>
               Please sign in to continue
             </Typography>
           </Box>

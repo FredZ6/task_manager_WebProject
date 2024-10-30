@@ -12,6 +12,7 @@ RUN npm install
 
 # Install @mui/icons-material
 RUN npm install @mui/icons-material
+RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
 # Copy the rest of the application files to the working directory
 COPY . .

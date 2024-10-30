@@ -9,66 +9,85 @@ import { styled } from '@mui/material/styles';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material';
+import ThemeToggle from './ThemeToggle';
 
-const GlassContainer = styled(Container)`
-  position: relative;
-  min-height: 100vh;
-  padding: 16px 24px;
+const GlassContainer = styled(Container)(({ theme }) => ({
+  position: 'relative',
+  minHeight: '100vh',
+  padding: '16px 24px',
   
-  &:before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-    z-index: -1;
+  '&:before': {
+    content: '""',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: theme.palette.mode === 'dark' 
+      ? '#121212'
+      : 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%)',
+    zIndex: -1
   }
-`;
+}));
 
-const GlassBox = styled(Box)`
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  margin-top: 2rem;
-  position: relative;
-  overflow: hidden;
+const GlassBox = styled(Box)(({ theme }) => ({
+  background: theme.palette.mode === 'dark' 
+    ? 'rgba(255, 255, 255, 0.05)'
+    : 'rgba(255, 255, 255, 0.6)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '16px',
+  padding: '2rem',
+  boxShadow: theme.palette.mode === 'dark'
+    ? '0 4px 30px rgba(0, 0, 0, 0.3)'
+    : '0 4px 30px rgba(0, 0, 0, 0.1)',
+  border: `1px solid ${
+    theme.palette.mode === 'dark'
+      ? 'rgba(255, 255, 255, 0.1)'
+      : 'rgba(255, 255, 255, 0.3)'
+  }`,
+  marginTop: '2rem',
+  position: 'relative',
+  overflow: 'hidden',
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #2196F3, #E91E63);
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '4px',
+    background: 'linear-gradient(90deg, #2196F3, #E91E63)',
   }
-`;
+}));
 
-const GlassAppBar = styled(AppBar)`
-  background: rgba(255, 255, 255, 0.4) !important;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  position: relative !important;
-  width: 100% !important;
-`;
+const GlassAppBar = styled(AppBar)(({ theme }) => ({
+  background: theme.palette.mode === 'dark'
+    ? 'rgba(255, 255, 255, 0.05) !important'
+    : 'rgba(255, 255, 255, 0.4) !important',
+  backdropFilter: 'blur(10px)',
+  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+  borderBottom: `1px solid ${
+    theme.palette.mode === 'dark'
+      ? 'rgba(255, 255, 255, 0.1)'
+      : 'rgba(255, 255, 255, 0.3)'
+  }`,
+  borderRadius: '16px',
+  position: 'relative !important',
+  width: '100% !important'
+}));
 
 const StyledAvatar = styled(Avatar)`
   background: linear-gradient(135deg, #2196F3, #E91E63);
   margin-right: 12px;
 `;
 
-const TaskList = () => {
+const TaskList = ({ toggleTheme }) => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -106,23 +125,30 @@ const TaskList = () => {
     <GlassContainer component="main" maxWidth="md">
       <GlassAppBar position="static">
         <Toolbar>
-          <DashboardIcon sx={{ mr: 2, color: '#333' }} />
+          <DashboardIcon sx={{ 
+            mr: 2, 
+            color: theme.palette.mode === 'dark' ? '#fff' : '#333' 
+          }} />
           <StyledAvatar>
             {user.username.charAt(0).toUpperCase()}
           </StyledAvatar>
           <Typography variant="h6" sx={{ 
             flexGrow: 1,
-            color: '#333',
+            color: theme.palette.mode === 'dark' ? '#fff' : '#333',
             fontWeight: 500
           }}>
             Welcome, {user.username}
           </Typography>
+          <ThemeToggle toggleTheme={toggleTheme} />
           <IconButton 
             onClick={handleLogout}
             sx={{ 
-              color: '#333',
+              ml: 1,
+              color: theme.palette.mode === 'dark' ? '#fff' : '#333',
               '&:hover': {
-                background: 'rgba(0, 0, 0, 0.04)'
+                background: theme.palette.mode === 'dark' 
+                  ? 'rgba(255, 255, 255, 0.08)'
+                  : 'rgba(0, 0, 0, 0.04)'
               }
             }}
           >
@@ -139,7 +165,7 @@ const TaskList = () => {
           mb: 3 
         }}>
           <Typography variant="h4" sx={{
-            color: '#333',
+            color: theme.palette.mode === 'dark' ? '#fff' : '#333',
             fontWeight: 500,
             position: 'relative',
             '&:after': {
@@ -154,7 +180,9 @@ const TaskList = () => {
           }}>
             Task List
           </Typography>
-          <Typography variant="body2" sx={{ color: '#666' }}>
+          <Typography variant="body2" sx={{ 
+            color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666' 
+          }}>
             Total Tasks: {tasks.length}
           </Typography>
         </Box>
@@ -185,11 +213,13 @@ const TaskList = () => {
             <Box sx={{
               textAlign: 'center',
               py: 4,
-              color: '#666',
+              color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666',
               backgroundColor: 'rgba(0,0,0,0.02)',
               borderRadius: 2
             }}>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{
+                color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666'
+              }}>
                 No tasks yet. Start by adding a new task!
               </Typography>
             </Box>
