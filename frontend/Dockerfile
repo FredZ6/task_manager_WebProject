@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install the project dependencies
 RUN npm install
 
+# Install @mui/icons-material
+RUN npm install @mui/icons-material
+
 # Copy the rest of the application files to the working directory
 COPY . .
 
