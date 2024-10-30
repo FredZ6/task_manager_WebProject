@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: my_docker_password
       POSTGRES_DB: my_database
     ports:
-      - "5433:5432"  # 容器外使用5433端口，映射到容器内的5432端口
+      - "5433:5432"  # use 5433 port on host machine
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
@@ -28,11 +28,11 @@ services:
       - app-network
 
   frontend:
-    build: ./frontend  # 前端项目的 Dockerfile 所在位置
+    build: ./frontend  # location of Dockerfile for frontend project
     ports:
       - "3000:3000"
     depends_on:
-      - backend  # 前端依赖后端
+      - backend  # frontend depends on backend
     networks:
       - app-network
 
