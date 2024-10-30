@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { getTasks } from '../services/api';
 import TaskItem from './TaskItem';
 import AddTask from './AddTask';
-import { Container, Typography, List, Box, AppBar, Toolbar } from '@mui/material';
+import { Container, Typography, List, Box, AppBar, Toolbar, IconButton, Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import LogoutIcon from '@mui/icons-material/Logout';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import { useNavigate } from 'react-router-dom';
 
 const GlassContainer = styled(Container)`
   position: relative;
@@ -32,6 +35,18 @@ const GlassBox = styled(Box)`
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.3);
   margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2196F3, #E91E63);
+  }
 `;
 
 const GlassAppBar = styled(AppBar)`
@@ -44,10 +59,16 @@ const GlassAppBar = styled(AppBar)`
   width: 100% !important;
 `;
 
+const StyledAvatar = styled(Avatar)`
+  background: linear-gradient(135deg, #2196F3, #E91E63);
+  margin-right: 12px;
+`;
+
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -76,10 +97,19 @@ const TaskList = () => {
     setTasks(response.data);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
   return (
     <GlassContainer component="main" maxWidth="md">
       <GlassAppBar position="static">
         <Toolbar>
+          <DashboardIcon sx={{ mr: 2, color: '#333' }} />
+          <StyledAvatar>
+            {user.username.charAt(0).toUpperCase()}
+          </StyledAvatar>
           <Typography variant="h6" sx={{ 
             flexGrow: 1,
             color: '#333',
@@ -87,32 +117,92 @@ const TaskList = () => {
           }}>
             Welcome, {user.username}
           </Typography>
+          <IconButton 
+            onClick={handleLogout}
+            sx={{ 
+              color: '#333',
+              '&:hover': {
+                background: 'rgba(0, 0, 0, 0.04)'
+              }
+            }}
+          >
+            <LogoutIcon />
+          </IconButton>
         </Toolbar>
       </GlassAppBar>
 
       <GlassBox>
-        <Typography variant="h4" gutterBottom sx={{
-          color: '#333',
-          fontWeight: 500,
-          mb: 3
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          mb: 3 
         }}>
-          Task List
-        </Typography>
-        {error && (
-          <Typography color="error" variant="body2">
-            {error}
+          <Typography variant="h4" sx={{
+            color: '#333',
+            fontWeight: 500,
+            position: 'relative',
+            '&:after': {
+              content: '""',
+              position: 'absolute',
+              bottom: -8,
+              left: 0,
+              width: '40%',
+              height: 3,
+              background: 'linear-gradient(90deg, #2196F3, transparent)'
+            }
+          }}>
+            Task List
           </Typography>
+          <Typography variant="body2" sx={{ color: '#666' }}>
+            Total Tasks: {tasks.length}
+          </Typography>
+        </Box>
+        
+        {error && (
+          <Box sx={{
+            p: 2,
+            mb: 2,
+            borderRadius: 1,
+            backgroundColor: 'rgba(255,0,0,0.1)',
+            border: '1px solid rgba(255,0,0,0.3)'
+          }}>
+            <Typography color="error" variant="body2">
+              {error}
+            </Typography>
+          </Box>
         )}
+        
         <AddTask userId={user.id} onTaskAdded={handleTaskAdded} />
-        <List>
-          {tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onTaskUpdate={handleTaskUpdate}
-              onTaskDelete={handleTaskDelete}
-            />
-          ))}
+        
+        <List sx={{
+          mt: 2,
+          '& > *': {
+            transition: 'all 0.3s ease-in-out',
+          }
+        }}>
+          {tasks.length === 0 ? (
+            <Box sx={{
+              textAlign: 'center',
+              py: 4,
+              color: '#666',
+              backgroundColor: 'rgba(0,0,0,0.02)',
+              borderRadius: 2
+            }}>
+              <Typography variant="body1">
+                No tasks yet. Start by adding a new task!
+              </Typography>
+            </Box>
+          ) : (
+            tasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                onTaskUpdate={handleTaskUpdate}
+                onTaskDelete={handleTaskDelete}
+              />
+            ))
+          )}
         </List>
       </GlassBox>
     </GlassContainer>
