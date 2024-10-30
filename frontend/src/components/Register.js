@@ -28,18 +28,18 @@ import {
 const GlassContainer = styled(Container)`
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  background: #ffffff;
+  padding-top: 15vh;
 `;
 
 const GlassBox = styled(Paper)`
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
+  background: #ffffff;
   border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   width: 100%;
   max-width: 400px;
   position: relative;
