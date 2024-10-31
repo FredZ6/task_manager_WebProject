@@ -11,7 +11,6 @@
 .history/
 
 # 其他常见需要忽略的文件
-node_modules/
 **/node_modules/
 .cache/
 **/.cache/
