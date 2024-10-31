@@ -123,20 +123,27 @@ const TaskList = ({ toggleTheme }) => {
 
   const sortAndCategoryTasks = (tasks) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setUTCHours(0, 0, 0, 0);
 
     return tasks.sort((a, b) => {
-      const dateA = a.dueDate ? new Date(a.dueDate) : new Date('9999-12-31');
-      const dateB = b.dueDate ? new Date(b.dueDate) : new Date('9999-12-31');
+      const dateA = a.dueDate ? new Date(a.dueDate + 'T00:00:00Z') : new Date('9999-12-31');
+      const dateB = b.dueDate ? new Date(b.dueDate + 'T00:00:00Z') : new Date('9999-12-31');
       return dateA - dateB;
     }).reduce((acc, task) => {
-      const dueDate = task.dueDate ? new Date(task.dueDate) : null;
-      
-      if (!dueDate) {
+      if (!task.dueDate) {
         acc.noDueDate.push(task);
-      } else if (dueDate < today) {
+        return acc;
+      }
+
+      const dueDate = new Date(task.dueDate + 'T00:00:00Z');
+      
+      if (dueDate < today) {
         acc.overdue.push(task);
-      } else if (dueDate.toDateString() === today.toDateString()) {
+      } else if (
+        dueDate.getUTCFullYear() === today.getUTCFullYear() &&
+        dueDate.getUTCMonth() === today.getUTCMonth() &&
+        dueDate.getUTCDate() === today.getUTCDate()
+      ) {
         acc.dueToday.push(task);
       } else {
         acc.upcoming.push(task);

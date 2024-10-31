@@ -48,6 +48,18 @@ const StyledButton = styled(Button)(({ theme }) => ({
   }
 }));
 
+// 添加一个日期格式化函数
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC'
+  });
+};
+
 const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
@@ -243,7 +255,7 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
                 {category === 'dueToday' && 'Due Today'}
                 {category === 'upcoming' && 'Coming Up'}
                 {' - '}
-                {new Date(task.dueDate).toLocaleDateString()}
+                {formatDate(task.dueDate)}
               </Typography>
             )}
             <Typography variant="body2" sx={{ 
