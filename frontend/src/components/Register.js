@@ -37,7 +37,7 @@ const GlassContainer = styled(Container)(({ theme }) => ({
 }));
 
 const GlassBox = styled(Paper)(({ theme }) => ({
-  background: theme.palette.mode === 'dark' ? '#1e1e1e' : '#ffffff',
+  background: theme.palette.background.paper,
   borderRadius: '16px',
   padding: '2.5rem',
   boxShadow: theme.palette.mode === 'dark' 
@@ -166,13 +166,32 @@ const Register = ({ toggleTheme }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonOutline sx={{ color: 'action.active' }} />
+                    <PersonOutline sx={{ 
+                      color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'action.active' 
+                    }} />
                   </InputAdornment>
                 ),
               }}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                  backgroundColor: theme.palette.mode === 'dark' 
+                    ? 'rgba(255, 255, 255, 0.05)'
+                    : 'rgba(255, 255, 255, 0.5)',
+                  '& fieldset': {
+                    borderColor: theme.palette.mode === 'dark'
+                      ? 'rgba(255, 255, 255, 0.2)'
+                      : 'rgba(0, 0, 0, 0.2)',
+                  },
+                },
+                '& label': {
+                  color: theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.7)'
+                    : 'rgba(0, 0, 0, 0.7)',
+                },
+                '& input': {
+                  color: theme.palette.mode === 'dark'
+                    ? '#fff'
+                    : '#000',
                 }
               }}
             />
@@ -187,7 +206,9 @@ const Register = ({ toggleTheme }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <LockOutlined sx={{ color: 'action.active' }} />
+                    <LockOutlined sx={{ 
+                      color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'action.active' 
+                    }} />
                   </InputAdornment>
                 ),
                 endAdornment: (
@@ -195,6 +216,9 @@ const Register = ({ toggleTheme }) => {
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
+                      sx={{
+                        color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'action.active'
+                      }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
@@ -203,7 +227,24 @@ const Register = ({ toggleTheme }) => {
               }}
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                  backgroundColor: theme.palette.mode === 'dark' 
+                    ? 'rgba(255, 255, 255, 0.05)'
+                    : 'rgba(255, 255, 255, 0.5)',
+                  '& fieldset': {
+                    borderColor: theme.palette.mode === 'dark'
+                      ? 'rgba(255, 255, 255, 0.2)'
+                      : 'rgba(0, 0, 0, 0.2)',
+                  },
+                },
+                '& label': {
+                  color: theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.7)'
+                    : 'rgba(0, 0, 0, 0.7)',
+                },
+                '& input': {
+                  color: theme.palette.mode === 'dark'
+                    ? '#fff'
+                    : '#000',
                 }
               }}
             />
