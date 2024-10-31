@@ -1,0 +1,20 @@
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# VS Code files
+.vscode/
+*.code-workspace
+.history/
+
+# 其他常见需要忽略的文件
+**/node_modules/
+.cache/
+**/.cache/
+dist/
+build/
+*.log
+.env 
