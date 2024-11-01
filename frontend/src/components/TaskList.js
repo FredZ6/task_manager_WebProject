@@ -4,83 +4,18 @@ import React, { useState, useEffect } from 'react';
 import { getTasks } from '../services/api';
 import TaskItem from './TaskItem';
 import AddTask from './AddTask';
-import { Container, Typography, List, Box, AppBar, Toolbar, IconButton, Avatar } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Typography, List, Box, Toolbar, IconButton } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import ThemeToggle from './ThemeToggle';
-
-const GlassContainer = styled(Container)(({ theme }) => ({
-  position: 'relative',
-  minHeight: '100vh',
-  padding: '16px 24px',
-  
-  '&:before': {
-    content: '""',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: theme.palette.mode === 'dark' 
-      ? '#121212'
-      : 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%)',
-    zIndex: -1
-  }
-}));
-
-const GlassBox = styled(Box)(({ theme }) => ({
-  background: theme.palette.mode === 'dark' 
-    ? 'rgba(255, 255, 255, 0.05)'
-    : 'rgba(255, 255, 255, 0.6)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '16px',
-  padding: '2rem',
-  boxShadow: theme.palette.mode === 'dark'
-    ? '0 4px 30px rgba(0, 0, 0, 0.3)'
-    : '0 4px 30px rgba(0, 0, 0, 0.1)',
-  border: `1px solid ${
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'rgba(255, 255, 255, 0.3)'
-  }`,
-  marginTop: '2rem',
-  position: 'relative',
-  overflow: 'hidden',
-
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '4px',
-    background: 'linear-gradient(90deg, #2196F3, #E91E63)',
-  }
-}));
-
-const GlassAppBar = styled(AppBar)(({ theme }) => ({
-  background: theme.palette.mode === 'dark'
-    ? 'rgba(255, 255, 255, 0.05) !important'
-    : 'rgba(255, 255, 255, 0.4) !important',
-  backdropFilter: 'blur(10px)',
-  boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-  borderBottom: `1px solid ${
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'rgba(255, 255, 255, 0.3)'
-  }`,
-  borderRadius: '16px',
-  position: 'relative !important',
-  width: '100% !important'
-}));
-
-const StyledAvatar = styled(Avatar)`
-  background: linear-gradient(135deg, #2196F3, #E91E63);
-  margin-right: 12px;
-`;
+import { GlassContainer, GlassBox, GlassAppBar, StyledAvatar } from '../styles/TaskList.styles';
+import { 
+  textColorStyle, 
+  secondaryTextColorStyle, 
+  errorBoxStyle
+} from '../styles/common.styles';
 
 const TaskList = ({ toggleTheme }) => {
   const [tasks, setTasks] = useState([]);
@@ -164,14 +99,14 @@ const TaskList = ({ toggleTheme }) => {
         <Toolbar>
           <DashboardIcon sx={{ 
             mr: 2, 
-            color: theme.palette.mode === 'dark' ? '#fff' : '#333' 
+            ...textColorStyle(theme)
           }} />
           <StyledAvatar>
             {user.username.charAt(0).toUpperCase()}
           </StyledAvatar>
           <Typography variant="h6" sx={{ 
             flexGrow: 1,
-            color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+            ...textColorStyle(theme),
             fontWeight: 500
           }}>
             Welcome, {user.username}
@@ -181,7 +116,7 @@ const TaskList = ({ toggleTheme }) => {
             onClick={handleLogout}
             sx={{ 
               ml: 1,
-              color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+              ...textColorStyle(theme),
               '&:hover': {
                 background: theme.palette.mode === 'dark' 
                   ? 'rgba(255, 255, 255, 0.08)'
@@ -202,7 +137,7 @@ const TaskList = ({ toggleTheme }) => {
           mb: 3 
         }}>
           <Typography variant="h4" sx={{
-            color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+            ...textColorStyle(theme),
             fontWeight: 500,
             position: 'relative',
             '&:after': {
@@ -217,21 +152,13 @@ const TaskList = ({ toggleTheme }) => {
           }}>
             Task List
           </Typography>
-          <Typography variant="body2" sx={{ 
-            color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666' 
-          }}>
+          <Typography variant="body2" sx={secondaryTextColorStyle(theme)}>
             Total Tasks: {tasks.length}
           </Typography>
         </Box>
         
         {error && (
-          <Box sx={{
-            p: 2,
-            mb: 2,
-            borderRadius: 1,
-            backgroundColor: 'rgba(255,0,0,0.1)',
-            border: '1px solid rgba(255,0,0,0.3)'
-          }}>
+          <Box sx={errorBoxStyle}>
             <Typography color="error" variant="body2">
               {error}
             </Typography>
@@ -250,7 +177,7 @@ const TaskList = ({ toggleTheme }) => {
             <Box sx={{
               textAlign: 'center',
               py: 4,
-              color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666',
+              ...secondaryTextColorStyle(theme),
               backgroundColor: 'rgba(0,0,0,0.02)',
               borderRadius: 2
             }}>
@@ -267,7 +194,7 @@ const TaskList = ({ toggleTheme }) => {
                       variant="h6" 
                       sx={{ 
                         mb: 2,
-                        color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+                        ...textColorStyle(theme),
                         textTransform: 'uppercase',
                         fontSize: '0.9rem',
                         letterSpacing: '1px',

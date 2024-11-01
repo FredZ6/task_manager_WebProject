@@ -7,16 +7,13 @@ import { useTheme } from '@mui/material';
 import { 
   TextField, 
   Button, 
-  Container, 
   Typography, 
   Box,
-  Paper,
   IconButton,
   InputAdornment,
   Divider,
   Fade
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { 
   Visibility, 
   VisibilityOff,
@@ -26,55 +23,14 @@ import {
   ArrowBack
 } from '@mui/icons-material';
 import ThemeToggle from './ThemeToggle';
-
-const GlassContainer = styled(Container)(({ theme }) => ({
-  minHeight: '100vh',
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'center',
-  background: theme.palette.mode === 'dark' ? '#121212' : '#ffffff',
-  paddingTop: '15vh'
-}));
-
-const GlassBox = styled(Paper)(({ theme }) => ({
-  background: theme.palette.background.paper,
-  borderRadius: '16px',
-  padding: '2.5rem',
-  boxShadow: theme.palette.mode === 'dark' 
-    ? '0 8px 32px rgba(0, 0, 0, 0.3)'
-    : '0 8px 32px rgba(0, 0, 0, 0.08)',
-  border: `1px solid ${
-    theme.palette.mode === 'dark' 
-      ? 'rgba(255, 255, 255, 0.05)'
-      : 'rgba(0, 0, 0, 0.05)'
-  }`,
-  width: '100%',
-  maxWidth: '400px',
-  position: 'relative',
-  overflow: 'hidden',
-
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '4px',
-    background: 'linear-gradient(90deg, #E91E63, #2196F3)',
-  }
-}));
-
-const StyledButton = styled(Button)`
-  background: linear-gradient(45deg, #E91E63, #D81B60);
-  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
-  border-radius: 8px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
-  }
-`;
+import { GlassContainer, GlassBox, RegisterButton } from '../styles/Auth.styles';
+import { 
+  textFieldStyle, 
+  errorBoxStyle, 
+  gradientIconBoxStyle, 
+  gradientTextStyle,
+  textColorStyle 
+} from '../styles/common.styles';
 
 const Register = ({ toggleTheme }) => {
   const [username, setUsername] = useState('');
@@ -112,42 +68,28 @@ const Register = ({ toggleTheme }) => {
             mb: 3
           }}>
             <Box sx={{
-              width: 60,
-              height: 60,
-              borderRadius: '50%',
-              background: 'linear-gradient(45deg, #E91E63, #2196F3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mb: 2
+              ...gradientIconBoxStyle,
+              background: 'linear-gradient(45deg, #E91E63, #2196F3)'
             }}>
               <PersonAddOutlined sx={{ color: '#fff', fontSize: 30 }} />
             </Box>
-            <Typography component="h1" variant="h4" 
-              sx={{ 
-                fontWeight: 600,
-                background: 'linear-gradient(45deg, #E91E63, #2196F3)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                color: 'transparent'
-              }}>
+            <Typography 
+              component="h1" 
+              variant="h4" 
+              sx={{
+                ...gradientTextStyle,
+                background: 'linear-gradient(45deg, #E91E63, #2196F3)'
+              }}
+            >
               Create Account
             </Typography>
-            <Typography variant="body2" sx={{ 
-              color: theme.palette.mode === 'dark' ? '#fff' : '#666'
-            }}>
+            <Typography variant="body2" sx={textColorStyle(theme)}>
               Join us to get started
             </Typography>
           </Box>
 
           {error && (
-            <Box sx={{
-              p: 2,
-              mb: 2,
-              borderRadius: 1,
-              backgroundColor: 'rgba(255,0,0,0.1)',
-              border: '1px solid rgba(255,0,0,0.3)'
-            }}>
+            <Box sx={errorBoxStyle}>
               <Typography color="error" variant="body2" align="center">
                 {error}
               </Typography>
@@ -172,28 +114,7 @@ const Register = ({ toggleTheme }) => {
                   </InputAdornment>
                 ),
               }}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  backgroundColor: theme.palette.mode === 'dark' 
-                    ? 'rgba(255, 255, 255, 0.05)'
-                    : 'rgba(255, 255, 255, 0.5)',
-                  '& fieldset': {
-                    borderColor: theme.palette.mode === 'dark'
-                      ? 'rgba(255, 255, 255, 0.2)'
-                      : 'rgba(0, 0, 0, 0.2)',
-                  },
-                },
-                '& label': {
-                  color: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.7)'
-                    : 'rgba(0, 0, 0, 0.7)',
-                },
-                '& input': {
-                  color: theme.palette.mode === 'dark'
-                    ? '#fff'
-                    : '#000',
-                }
-              }}
+              sx={textFieldStyle(theme)}
             />
             <TextField
               margin="normal"
@@ -225,38 +146,17 @@ const Register = ({ toggleTheme }) => {
                   </InputAdornment>
                 ),
               }}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  backgroundColor: theme.palette.mode === 'dark' 
-                    ? 'rgba(255, 255, 255, 0.05)'
-                    : 'rgba(255, 255, 255, 0.5)',
-                  '& fieldset': {
-                    borderColor: theme.palette.mode === 'dark'
-                      ? 'rgba(255, 255, 255, 0.2)'
-                      : 'rgba(0, 0, 0, 0.2)',
-                  },
-                },
-                '& label': {
-                  color: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.7)'
-                    : 'rgba(0, 0, 0, 0.7)',
-                },
-                '& input': {
-                  color: theme.palette.mode === 'dark'
-                    ? '#fff'
-                    : '#000',
-                }
-              }}
+              sx={textFieldStyle(theme)}
             />
 
-            <StyledButton
+            <RegisterButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Register
-            </StyledButton>
+            </RegisterButton>
 
             <Divider sx={{ my: 2 }}>
               <Typography variant="body2" color="textSecondary">
