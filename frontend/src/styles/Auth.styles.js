@@ -1,5 +1,12 @@
 import { styled } from '@mui/material/styles';
-import { Container, Paper, Button } from '@mui/material';
+import { Container, Paper } from '@mui/material';
+import { 
+  glassEffect, 
+  shadowEffect, 
+  borderRadius, 
+  gradientBackground 
+} from './common.styles';
+import { BaseButton } from './Button.styles';
 
 export const GlassContainer = styled(Container)(({ theme }) => ({
   minHeight: '100vh',
@@ -11,17 +18,10 @@ export const GlassContainer = styled(Container)(({ theme }) => ({
 }));
 
 export const GlassBox = styled(Paper)(({ theme }) => ({
-  background: theme.palette.background.paper,
-  borderRadius: '16px',
+  ...glassEffect(theme),
+  ...shadowEffect(theme),
+  borderRadius: borderRadius.large,
   padding: '2.5rem',
-  boxShadow: theme.palette.mode === 'dark' 
-    ? '0 8px 32px rgba(0, 0, 0, 0.3)'
-    : '0 8px 32px rgba(0, 0, 0, 0.08)',
-  border: `1px solid ${
-    theme.palette.mode === 'dark' 
-      ? 'rgba(255, 255, 255, 0.05)'
-      : 'rgba(0, 0, 0, 0.05)'
-  }`,
   width: '100%',
   maxWidth: '400px',
   position: 'relative',
@@ -34,30 +34,24 @@ export const GlassBox = styled(Paper)(({ theme }) => ({
     left: 0,
     right: 0,
     height: '4px',
-    background: 'linear-gradient(90deg, #2196F3, #E91E63)',
+    background: gradientBackground.accent
   }
 }));
 
-export const StyledButton = styled(Button)`
-  background: linear-gradient(45deg, #2196F3, #1976D2);
+export const StyledButton = styled(BaseButton)`
+  background: ${gradientBackground.primary};
   box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
-  border-radius: 8px;
-  transition: all 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
   }
 `;
 
-export const RegisterButton = styled(Button)`
-  background: linear-gradient(45deg, #E91E63, #D81B60);
+export const RegisterButton = styled(BaseButton)`
+  background: ${gradientBackground.secondary};
   box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
-  border-radius: 8px;
-  transition: all 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
   }
 `; 

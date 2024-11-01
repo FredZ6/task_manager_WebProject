@@ -14,8 +14,7 @@ import { GlassContainer, GlassBox, GlassAppBar, StyledAvatar } from '../styles/T
 import { 
   textColorStyle, 
   secondaryTextColorStyle, 
-  errorBoxStyle,
-  gradientTextStyle 
+  errorBoxStyle
 } from '../styles/common.styles';
 
 const TaskList = ({ toggleTheme }) => {

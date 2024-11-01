@@ -1,23 +1,12 @@
 import { styled } from '@mui/material/styles';
 import { Card, Button } from '@mui/material';
+import { glassEffect, hoverEffect, borderRadius } from './common.styles';
 
 export const GlassCard = styled(Card)(({ theme, category }) => ({
-  background: theme.palette.mode === 'dark' 
-    ? 'rgba(255, 255, 255, 0.05)'
-    : 'rgba(255, 255, 255, 0.7)',
-  backdropFilter: 'blur(10px)',
-  borderRadius: '12px',
-  border: `1px solid ${
-    theme.palette.mode === 'dark' 
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'rgba(255, 255, 255, 0.2)'
-  }`,
-  transition: 'transform 0.2s ease-in-out',
+  ...glassEffect(theme),
+  ...hoverEffect,
+  borderRadius: borderRadius.medium,
   position: 'relative',
-  
-  '&:hover': {
-    transform: 'translateY(-3px)',
-  },
 
   '&:before': {
     content: '""',
@@ -35,13 +24,7 @@ export const GlassCard = styled(Card)(({ theme, category }) => ({
   }
 }));
 
-export const StyledButton = styled(Button)(({ theme }) => ({
-  backdropFilter: 'blur(5px)',
-  borderRadius: '8px',
-  transition: 'all 0.2s ease-in-out',
-  
-  '&:hover': {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
-  }
-})); 
+export const StyledButton = styled(Button)`
+  border-radius: ${borderRadius.small};
+  ${hoverEffect}
+`; 
