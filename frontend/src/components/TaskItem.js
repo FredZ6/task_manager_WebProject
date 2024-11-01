@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { updateTask, deleteTask } from '../services/api';
 import { TextField, CardContent, Typography, Box, useTheme } from '@mui/material';
 import { GlassCard, StyledButton } from '../styles/TaskItem.styles';
+import { 
+  textFieldStyle, 
+  primaryButtonStyle, 
+  secondaryButtonStyle, 
+  textColorStyle, 
+  secondaryTextColorStyle 
+} from '../styles/common.styles';
 
 // 添加一个日期格式化函数
 const formatDate = (dateString) => {
@@ -42,29 +49,6 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
     }
   };
 
-  const textFieldStyle = {
-    '& .MuiOutlinedInput-root': {
-      backgroundColor: theme.palette.mode === 'dark' 
-        ? 'rgba(255, 255, 255, 0.05)'
-        : 'rgba(255, 255, 255, 0.5)',
-      '& fieldset': {
-        borderColor: theme.palette.mode === 'dark'
-          ? 'rgba(255, 255, 255, 0.2)'
-          : 'rgba(0, 0, 0, 0.2)',
-      },
-    },
-    '& label': {
-      color: theme.palette.mode === 'dark'
-        ? 'rgba(255, 255, 255, 0.7)'
-        : 'rgba(0, 0, 0, 0.7)',
-    },
-    '& input, & textarea': {
-      color: theme.palette.mode === 'dark'
-        ? '#fff'
-        : '#000',
-    }
-  };
-
   return (
     <GlassCard sx={{ mb: 2 }} category={category}>
       <CardContent>
@@ -76,7 +60,7 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
               onChange={(e) => setTitle(e.target.value)}
               fullWidth
               required
-              sx={{ mb: 2, ...textFieldStyle }}
+              sx={{ mb: 2, ...textFieldStyle(theme) }}
             />
             <TextField
               label="Description"
@@ -85,7 +69,7 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
               fullWidth
               multiline
               rows={2}
-              sx={{ mb: 2, ...textFieldStyle }}
+              sx={{ mb: 2, ...textFieldStyle(theme) }}
             />
             <TextField
               label="Due Date"
@@ -93,7 +77,7 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)} 
               fullWidth
-              sx={{ mb: 2, ...textFieldStyle }}
+              sx={{ mb: 2, ...textFieldStyle(theme) }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -103,41 +87,14 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
               <StyledButton 
                 type="submit" 
                 variant="contained"
-                sx={{
-                  flex: 1,
-                  background: theme.palette.mode === 'dark'
-                    ? 'linear-gradient(45deg, #2196F3, #1976D2)'
-                    : 'rgba(25, 118, 210, 0.9)',
-                  color: '#fff',
-                  '&:hover': {
-                    background: theme.palette.mode === 'dark'
-                      ? 'linear-gradient(45deg, #1976D2, #1565C0)'
-                      : 'rgba(25, 118, 210, 1)',
-                  }
-                }}
+                sx={primaryButtonStyle(theme)}
               >
                 Save
               </StyledButton>
               <StyledButton 
                 variant="outlined" 
                 onClick={() => setIsEditing(false)}
-                sx={{
-                  flex: 1,
-                  borderColor: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.3)'
-                    : 'rgba(0, 0, 0, 0.3)',
-                  color: theme.palette.mode === 'dark'
-                    ? '#fff'
-                    : '#333',
-                  '&:hover': {
-                    borderColor: theme.palette.mode === 'dark'
-                      ? 'rgba(255, 255, 255, 0.5)'
-                      : 'rgba(0, 0, 0, 0.5)',
-                    backgroundColor: theme.palette.mode === 'dark'
-                      ? 'rgba(255, 255, 255, 0.05)'
-                      : 'rgba(0, 0, 0, 0.05)'
-                  }
-                }}
+                sx={secondaryButtonStyle(theme)}
               >
                 Cancel
               </StyledButton>
@@ -145,9 +102,7 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
           </form>
         ) : (
           <>
-            <Typography variant="h6" sx={{ 
-              color: theme.palette.mode === 'dark' ? '#fff' : '#333'
-            }}>
+            <Typography variant="h6" sx={textColorStyle(theme)}>
               {task.title}
             </Typography>
             {task.dueDate && (
@@ -170,53 +125,21 @@ const TaskItem = ({ task, onTaskUpdate, onTaskDelete, category }) => {
                 {formatDate(task.dueDate)}
               </Typography>
             )}
-            <Typography variant="body2" sx={{ 
-              color: theme.palette.mode === 'dark' 
-                ? 'rgba(255, 255, 255, 0.7)' 
-                : 'rgba(0, 0, 0, 0.7)',
-              mb: 1
-            }}>
+            <Typography variant="body2" sx={{ ...secondaryTextColorStyle(theme), mb: 1 }}>
               {task.description}
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <StyledButton 
                 variant="contained" 
                 onClick={() => setIsEditing(true)} 
-                sx={{ 
-                  flex: 1,
-                  background: theme.palette.mode === 'dark'
-                    ? 'linear-gradient(45deg, #2196F3, #1976D2)'
-                    : 'rgba(25, 118, 210, 0.9)',
-                  color: '#fff',
-                  '&:hover': {
-                    background: theme.palette.mode === 'dark'
-                      ? 'linear-gradient(45deg, #1976D2, #1565C0)'
-                      : 'rgba(25, 118, 210, 1)',
-                  }
-                }}
+                sx={primaryButtonStyle(theme)}
               >
                 Edit
               </StyledButton>
               <StyledButton 
                 variant="outlined" 
                 onClick={handleDelete}
-                sx={{
-                  flex: 1,
-                  borderColor: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.3)'
-                    : 'rgba(0, 0, 0, 0.3)',
-                  color: theme.palette.mode === 'dark'
-                    ? '#fff'
-                    : '#333',
-                  '&:hover': {
-                    borderColor: theme.palette.mode === 'dark'
-                      ? 'rgba(255, 255, 255, 0.5)'
-                      : 'rgba(0, 0, 0, 0.5)',
-                    backgroundColor: theme.palette.mode === 'dark'
-                      ? 'rgba(255, 255, 255, 0.05)'
-                      : 'rgba(0, 0, 0, 0.05)'
-                  }
-                }}
+                sx={secondaryButtonStyle(theme)}
               >
                 Delete
               </StyledButton>

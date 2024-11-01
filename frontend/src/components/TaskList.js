@@ -4,14 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { getTasks } from '../services/api';
 import TaskItem from './TaskItem';
 import AddTask from './AddTask';
-import { Container, Typography, List, Box, AppBar, Toolbar, IconButton, Avatar } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Typography, List, Box, Toolbar, IconButton } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import ThemeToggle from './ThemeToggle';
 import { GlassContainer, GlassBox, GlassAppBar, StyledAvatar } from '../styles/TaskList.styles';
+import { 
+  textColorStyle, 
+  secondaryTextColorStyle, 
+  errorBoxStyle,
+  gradientTextStyle 
+} from '../styles/common.styles';
 
 const TaskList = ({ toggleTheme }) => {
   const [tasks, setTasks] = useState([]);
@@ -95,14 +100,14 @@ const TaskList = ({ toggleTheme }) => {
         <Toolbar>
           <DashboardIcon sx={{ 
             mr: 2, 
-            color: theme.palette.mode === 'dark' ? '#fff' : '#333' 
+            ...textColorStyle(theme)
           }} />
           <StyledAvatar>
             {user.username.charAt(0).toUpperCase()}
           </StyledAvatar>
           <Typography variant="h6" sx={{ 
             flexGrow: 1,
-            color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+            ...textColorStyle(theme),
             fontWeight: 500
           }}>
             Welcome, {user.username}
@@ -112,7 +117,7 @@ const TaskList = ({ toggleTheme }) => {
             onClick={handleLogout}
             sx={{ 
               ml: 1,
-              color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+              ...textColorStyle(theme),
               '&:hover': {
                 background: theme.palette.mode === 'dark' 
                   ? 'rgba(255, 255, 255, 0.08)'
@@ -133,7 +138,7 @@ const TaskList = ({ toggleTheme }) => {
           mb: 3 
         }}>
           <Typography variant="h4" sx={{
-            color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+            ...textColorStyle(theme),
             fontWeight: 500,
             position: 'relative',
             '&:after': {
@@ -148,21 +153,13 @@ const TaskList = ({ toggleTheme }) => {
           }}>
             Task List
           </Typography>
-          <Typography variant="body2" sx={{ 
-            color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666' 
-          }}>
+          <Typography variant="body2" sx={secondaryTextColorStyle(theme)}>
             Total Tasks: {tasks.length}
           </Typography>
         </Box>
         
         {error && (
-          <Box sx={{
-            p: 2,
-            mb: 2,
-            borderRadius: 1,
-            backgroundColor: 'rgba(255,0,0,0.1)',
-            border: '1px solid rgba(255,0,0,0.3)'
-          }}>
+          <Box sx={errorBoxStyle}>
             <Typography color="error" variant="body2">
               {error}
             </Typography>
@@ -181,7 +178,7 @@ const TaskList = ({ toggleTheme }) => {
             <Box sx={{
               textAlign: 'center',
               py: 4,
-              color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : '#666',
+              ...secondaryTextColorStyle(theme),
               backgroundColor: 'rgba(0,0,0,0.02)',
               borderRadius: 2
             }}>
@@ -198,7 +195,7 @@ const TaskList = ({ toggleTheme }) => {
                       variant="h6" 
                       sx={{ 
                         mb: 2,
-                        color: theme.palette.mode === 'dark' ? '#fff' : '#333',
+                        ...textColorStyle(theme),
                         textTransform: 'uppercase',
                         fontSize: '0.9rem',
                         letterSpacing: '1px',

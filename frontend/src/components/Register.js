@@ -24,6 +24,13 @@ import {
 } from '@mui/icons-material';
 import ThemeToggle from './ThemeToggle';
 import { GlassContainer, GlassBox, RegisterButton } from '../styles/Auth.styles';
+import { 
+  textFieldStyle, 
+  errorBoxStyle, 
+  gradientIconBoxStyle, 
+  gradientTextStyle,
+  textColorStyle 
+} from '../styles/common.styles';
 
 const Register = ({ toggleTheme }) => {
   const [username, setUsername] = useState('');
@@ -40,29 +47,6 @@ const Register = ({ toggleTheme }) => {
       navigate('/login');
     } catch (err) {
       setError('Registration failed. Username may already exist.');
-    }
-  };
-
-  const textFieldStyle = {
-    '& .MuiOutlinedInput-root': {
-      backgroundColor: theme.palette.mode === 'dark' 
-        ? 'rgba(255, 255, 255, 0.05)'
-        : 'rgba(255, 255, 255, 0.5)',
-      '& fieldset': {
-        borderColor: theme.palette.mode === 'dark'
-          ? 'rgba(255, 255, 255, 0.2)'
-          : 'rgba(0, 0, 0, 0.2)',
-      },
-    },
-    '& label': {
-      color: theme.palette.mode === 'dark'
-        ? 'rgba(255, 255, 255, 0.7)'
-        : 'rgba(0, 0, 0, 0.7)',
-    },
-    '& input': {
-      color: theme.palette.mode === 'dark'
-        ? '#fff'
-        : '#000',
     }
   };
 
@@ -84,42 +68,28 @@ const Register = ({ toggleTheme }) => {
             mb: 3
           }}>
             <Box sx={{
-              width: 60,
-              height: 60,
-              borderRadius: '50%',
-              background: 'linear-gradient(45deg, #E91E63, #2196F3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mb: 2
+              ...gradientIconBoxStyle,
+              background: 'linear-gradient(45deg, #E91E63, #2196F3)'
             }}>
               <PersonAddOutlined sx={{ color: '#fff', fontSize: 30 }} />
             </Box>
-            <Typography component="h1" variant="h4" 
-              sx={{ 
-                fontWeight: 600,
-                background: 'linear-gradient(45deg, #E91E63, #2196F3)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                color: 'transparent'
-              }}>
+            <Typography 
+              component="h1" 
+              variant="h4" 
+              sx={{
+                ...gradientTextStyle,
+                background: 'linear-gradient(45deg, #E91E63, #2196F3)'
+              }}
+            >
               Create Account
             </Typography>
-            <Typography variant="body2" sx={{ 
-              color: theme.palette.mode === 'dark' ? '#fff' : '#666'
-            }}>
+            <Typography variant="body2" sx={textColorStyle(theme)}>
               Join us to get started
             </Typography>
           </Box>
 
           {error && (
-            <Box sx={{
-              p: 2,
-              mb: 2,
-              borderRadius: 1,
-              backgroundColor: 'rgba(255,0,0,0.1)',
-              border: '1px solid rgba(255,0,0,0.3)'
-            }}>
+            <Box sx={errorBoxStyle}>
               <Typography color="error" variant="body2" align="center">
                 {error}
               </Typography>
@@ -144,7 +114,7 @@ const Register = ({ toggleTheme }) => {
                   </InputAdornment>
                 ),
               }}
-              sx={textFieldStyle}
+              sx={textFieldStyle(theme)}
             />
             <TextField
               margin="normal"
@@ -176,7 +146,7 @@ const Register = ({ toggleTheme }) => {
                   </InputAdornment>
                 ),
               }}
-              sx={textFieldStyle}
+              sx={textFieldStyle(theme)}
             />
 
             <RegisterButton

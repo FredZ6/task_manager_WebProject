@@ -5,6 +5,7 @@ import { createTask } from '../services/api';
 import { TextField, Box, Typography, CardContent, useTheme } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { GlassCard, StyledButton } from '../styles/AddTask.styles';
+import { textFieldStyle, errorBoxStyle } from '../styles/common.styles';
 
 const AddTask = ({ userId, onTaskAdded }) => {
   const [title, setTitle] = useState('');
@@ -30,13 +31,7 @@ const AddTask = ({ userId, onTaskAdded }) => {
     <GlassCard>
       <CardContent>
         {error && (
-          <Box sx={{
-            p: 2,
-            mb: 2,
-            borderRadius: 1,
-            backgroundColor: 'rgba(255,0,0,0.1)',
-            border: '1px solid rgba(255,0,0,0.3)'
-          }}>
+          <Box sx={errorBoxStyle}>
             <Typography color="error" variant="body2" align="center">
               {error}
             </Typography>
@@ -59,28 +54,7 @@ const AddTask = ({ userId, onTaskAdded }) => {
             onChange={(e) => setTitle(e.target.value)}
             required
             fullWidth
-            sx={{ 
-              '& .MuiOutlinedInput-root': {
-                backgroundColor: theme.palette.mode === 'dark' 
-                  ? 'rgba(255, 255, 255, 0.05)'
-                  : 'rgba(255, 255, 255, 0.5)',
-                '& fieldset': {
-                  borderColor: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.2)'
-                    : 'rgba(0, 0, 0, 0.2)',
-                },
-              },
-              '& label': {
-                color: theme.palette.mode === 'dark'
-                  ? 'rgba(255, 255, 255, 0.7)'
-                  : 'rgba(0, 0, 0, 0.7)',
-              },
-              '& input': {
-                color: theme.palette.mode === 'dark'
-                  ? '#fff'
-                  : '#000',
-              }
-            }}
+            sx={textFieldStyle(theme)}
           />
           <TextField
             label="Task Description"
@@ -89,28 +63,7 @@ const AddTask = ({ userId, onTaskAdded }) => {
             fullWidth
             multiline
             rows={1}
-            sx={{ 
-              '& .MuiOutlinedInput-root': {
-                backgroundColor: theme.palette.mode === 'dark' 
-                  ? 'rgba(255, 255, 255, 0.05)'
-                  : 'rgba(255, 255, 255, 0.5)',
-                '& fieldset': {
-                  borderColor: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.2)'
-                    : 'rgba(0, 0, 0, 0.2)',
-                },
-              },
-              '& label': {
-                color: theme.palette.mode === 'dark'
-                  ? 'rgba(255, 255, 255, 0.7)'
-                  : 'rgba(0, 0, 0, 0.7)',
-              },
-              '& textarea': {
-                color: theme.palette.mode === 'dark'
-                  ? '#fff'
-                  : '#000',
-              }
-            }}
+            sx={textFieldStyle(theme)}
           />
           <TextField
             label="Due Date"
@@ -122,28 +75,7 @@ const AddTask = ({ userId, onTaskAdded }) => {
             InputLabelProps={{
               shrink: true,
             }}
-            sx={{ 
-              '& .MuiOutlinedInput-root': {
-                backgroundColor: theme.palette.mode === 'dark' 
-                  ? 'rgba(255, 255, 255, 0.05)'
-                  : 'rgba(255, 255, 255, 0.5)',
-                '& fieldset': {
-                  borderColor: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.2)'
-                    : 'rgba(0, 0, 0, 0.2)',
-                },
-              },
-              '& label': {
-                color: theme.palette.mode === 'dark'
-                  ? 'rgba(255, 255, 255, 0.7)'
-                  : 'rgba(0, 0, 0, 0.7)',
-              },
-              '& input': {
-                color: theme.palette.mode === 'dark'
-                  ? '#fff'
-                  : '#000',
-              }
-            }}
+            sx={textFieldStyle(theme)}
           />
           <StyledButton 
             type="submit" 
