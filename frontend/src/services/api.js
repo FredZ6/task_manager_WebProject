@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+// Base API URL
 const API_URL = 'http://localhost:8080/api';
 
+// User authentication endpoints
 export const registerUser = (username, password) => {
   return axios.post(`${API_URL}/users/register`, { username, password });
 };
@@ -10,6 +12,7 @@ export const loginUser = (username, password) => {
   return axios.post(`${API_URL}/users/login`, { username, password });
 };
 
+// Task management endpoints
 export const getTasks = (userId) => {
   return axios.get(`${API_URL}/tasks/${userId}`);
 };

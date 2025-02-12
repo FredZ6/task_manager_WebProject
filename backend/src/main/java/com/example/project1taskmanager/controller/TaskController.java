@@ -1,7 +1,5 @@
 package com.example.project1taskmanager.controller;
 
-
-
 import com.example.project1taskmanager.entity.Task;
 import com.example.project1taskmanager.entity.User;
 import com.example.project1taskmanager.service.TaskService;
@@ -24,29 +22,29 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
-    // 创建任务
+    // Create a new task
     @PostMapping("/create")
     public Task createTask(@RequestBody Map<String, Object> requestBody) {
         String title = (String) requestBody.get("title");
         String description = (String) requestBody.get("description");
-        String dueDateStr = (String) requestBody.get("dueDate");  // 获取日期字符串
+        String dueDateStr = (String) requestBody.get("dueDate");  // Get date string
         Long userId = Long.valueOf(requestBody.get("userId").toString());
         
-        // 转换日期字符串为 LocalDate
+        // Convert date string to LocalDate
         LocalDate dueDate = dueDateStr != null ? LocalDate.parse(dueDateStr) : null;
         
         User user = userService.findById(userId);
         return taskService.createTask(title, description, dueDate, user);
     }
 
-    // 获取指定用户的所有任务
+    // Get all tasks for a specific user
     @GetMapping("/{userId}")
     public List<Task> getTasksByUser(@PathVariable Long userId) {
         User user = userService.findById(userId);
         return taskService.getTasksByUser(user);
     }
 
-    // 更新任务
+    // Update a task
     @PutMapping("/{taskId}")
     public Task updateTask(@PathVariable Long taskId,
                            @RequestBody Map<String, Object> requestBody) {
@@ -54,16 +52,16 @@ public class TaskController {
         String description = (String) requestBody.get("description");
         Long userId = Long.valueOf(requestBody.get("userId").toString());
         User user = userService.findById(userId);
-        String dueDateStr = (String) requestBody.get("dueDate"); // 从请求体获取 dueDate
-        LocalDate dueDate = dueDateStr != null ? LocalDate.parse(dueDateStr) : null; // 将字符串转为 LocalDate
+        String dueDateStr = (String) requestBody.get("dueDate"); // Get dueDate from request body
+        LocalDate dueDate = dueDateStr != null ? LocalDate.parse(dueDateStr) : null; // Convert string to LocalDate
 
         return taskService.updateTask(taskId, title, description, dueDate, user);
     }
 
-    // 删除任务
+    // Delete a task
     @DeleteMapping("/{taskId}")
     public void deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
-        System.out.println("Task"+ taskId +" is deleted");
+        System.out.println("Task "+ taskId +" is deleted");
     }
 }

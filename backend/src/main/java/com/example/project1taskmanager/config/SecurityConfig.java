@@ -16,13 +16,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 禁用 CSRF
+                .csrf(csrf -> csrf.disable()) // Disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/register", "/api/users/login").permitAll() // 开放用户注册和登录接口
-                        //.requestMatchers("/api/tasks/**").authenticated() // 任务相关 API 需要认证
-                        .anyRequest().permitAll() // 其他请求都允许访问
+                        .requestMatchers("/api/users/register", "/api/users/login").permitAll() // Allow access to register and login endpoints
+                        //.requestMatchers("/api/tasks/**").authenticated() // Require authentication for task-related APIs
+                        .anyRequest().permitAll() // Allow access to all other requests
                 )
-                .httpBasic(httpBasic -> {}); // 使用 lambda 风格配置 HTTP Basic 认证
+                .httpBasic(httpBasic -> {}); // Configure HTTP Basic authentication using lambda style
 
         return http.build();
     }

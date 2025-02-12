@@ -16,7 +16,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // 构造函数、Getter 和 Setter
+    // Constructors, Getters and Setters
 
     public User() {}
 

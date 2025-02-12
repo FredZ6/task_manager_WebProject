@@ -1,6 +1,6 @@
 // import { alpha } from '@mui/material/styles';
 
-// TextField 通用样式
+// Common TextField styles
 export const textFieldStyle = (theme) => ({
   '& .MuiOutlinedInput-root': {
     backgroundColor: theme.palette.mode === 'dark' 
@@ -24,7 +24,7 @@ export const textFieldStyle = (theme) => ({
   }
 });
 
-// 错误提示框样式
+// Error box styles
 export const errorBoxStyle = {
   p: 2,
   mb: 2,
@@ -33,7 +33,7 @@ export const errorBoxStyle = {
   border: '1px solid rgba(255,0,0,0.3)'
 };
 
-// 渐变图标容器样式
+// Gradient icon container styles
 export const gradientIconBoxStyle = {
   width: 60,
   height: 60,
@@ -45,7 +45,7 @@ export const gradientIconBoxStyle = {
   mb: 2
 };
 
-// 渐变文本样式
+// Gradient text styles
 export const gradientTextStyle = {
   fontWeight: 600,
   background: 'linear-gradient(45deg, #2196F3, #E91E63)',
@@ -54,7 +54,7 @@ export const gradientTextStyle = {
   color: 'transparent'
 };
 
-// 主按钮样式
+// Primary button styles
 export const primaryButtonStyle = (theme) => ({
   flex: 1,
   background: theme.palette.mode === 'dark'
@@ -68,7 +68,7 @@ export const primaryButtonStyle = (theme) => ({
   }
 });
 
-// 次要按钮样式
+// Secondary button styles
 export const secondaryButtonStyle = (theme) => ({
   flex: 1,
   borderColor: theme.palette.mode === 'dark'
@@ -87,19 +87,19 @@ export const secondaryButtonStyle = (theme) => ({
   }
 });
 
-// 暗色/亮色文本颜色
+// Dark/light text colors
 export const textColorStyle = (theme) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : '#333'
 });
 
-// 次要文本颜色
+// Secondary text colors
 export const secondaryTextColorStyle = (theme) => ({
   color: theme.palette.mode === 'dark' 
     ? 'rgba(255, 255, 255, 0.7)' 
     : 'rgba(0, 0, 0, 0.7)'
 });
 
-// 添加通用的玻璃态效果样式
+// Common glass effect styles
 export const glassEffect = (theme) => ({
   background: theme.palette.mode === 'dark' 
     ? 'rgba(255, 255, 255, 0.05)'
@@ -112,7 +112,7 @@ export const glassEffect = (theme) => ({
   }`,
 });
 
-// 添加通用的悬浮动画效果
+// Common hover animation effects
 export const hoverEffect = {
   transition: 'transform 0.2s ease-in-out',
   '&:hover': {
@@ -120,35 +120,35 @@ export const hoverEffect = {
   }
 };
 
-// 添加通用的渐变背景
+// Common gradient backgrounds
 export const gradientBackground = {
   primary: 'linear-gradient(45deg, #2196F3, #1976D2)',
   secondary: 'linear-gradient(45deg, #E91E63, #D81B60)',
   accent: 'linear-gradient(90deg, #2196F3, #E91E63)'
 };
 
-// 添加通用的阴影效果
+// Common shadow effects
 export const shadowEffect = (theme) => ({
   boxShadow: theme.palette.mode === 'dark'
     ? '0 4px 30px rgba(0, 0, 0, 0.3)'
     : '0 4px 30px rgba(0, 0, 0, 0.1)'
 });
 
-// 添加通用的圆角样式
+// Common border radius values
 export const borderRadius = {
   small: '8px',
   medium: '12px',
   large: '16px'
 };
 
-// 添加通用的间距
+// Common spacing values
 export const spacing = {
   small: '8px',
   medium: '16px',
   large: '24px'
 };
 
-// 添加通用的布局样式
+// Common layout styles
 export const flexCenter = {
   display: 'flex',
   alignItems: 'center',
@@ -161,7 +161,7 @@ export const flexBetween = {
   justifyContent: 'space-between'
 };
 
-// 添加通用的响应式布局
+// Common responsive layouts
 export const responsiveStyles = {
   column: {
     flexDirection: { xs: 'column', md: 'row' },

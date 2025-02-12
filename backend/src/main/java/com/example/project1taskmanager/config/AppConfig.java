@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class AppConfig {
 
-    // 配置 BCryptPasswordEncoder Bean，用于密码加密
+    // Configure BCryptPasswordEncoder Bean for password encryption
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

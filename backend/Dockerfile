@@ -1,28 +1,28 @@
-# 使用 Maven 镜像进行构建
+# Use Maven image for building
 FROM maven:3.8.5-openjdk-17-slim AS build
 
-# 设置工作目录
+# Set working directory
 WORKDIR /app
 
-# 复制 pom.xml 并下载依赖
+# Copy pom.xml and download dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# 复制项目源代码并进行构建
+# Copy source code and build
 COPY . .
 RUN mvn clean package -DskipTests
 
-# 使用 OpenJDK 镜像来运行应用
+# Use OpenJDK image for running the application
 FROM openjdk:17-jdk-slim
 
-# 设置工作目录
+# Set working directory
 WORKDIR /app
 
-# 复制构建好的 JAR 文件
+# Copy built JAR file
 COPY --from=build /app/target/*.jar app.jar
 
-# 暴露 Spring Boot 运行的端口
+# Expose Spring Boot port
 EXPOSE 8080
 
-# 启动应用
+# Start the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

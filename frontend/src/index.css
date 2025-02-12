@@ -13,23 +13,23 @@ body {
   min-height: 100vh;
 }
 
-/* 移除之前设置的白色背景 */
-/* 让背景色由 theme 控制 */
+/* Remove previously set white background */
+/* Let theme control background color */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-/* 添加全局样式以防止白色边缘 */
+/* Add global styles to prevent white edges */
 html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* 防止水平滚动 */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* 确保深色模式下整个页面都是深色的 */
+/* Ensure dark mode applies to entire page */
 body.dark-mode {
   background-color: #121212;
 }

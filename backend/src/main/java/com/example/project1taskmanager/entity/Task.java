@@ -16,7 +16,6 @@ public class Task {
 
     private String description;
 
-    //@Column(nullable = false)
     @Column(name = "due_date")
     private LocalDate dueDate;
 
@@ -24,7 +23,7 @@ public class Task {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // 构造函数、Getter 和 Setter
+    // Constructors, Getters and Setters
 
     public Task() {}
 

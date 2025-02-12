@@ -7,7 +7,6 @@ import com.example.project1taskmanager.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    // Find user by their username
     User findByUsername(String username);
-
-
 }

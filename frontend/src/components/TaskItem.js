@@ -10,7 +10,7 @@ import {
   secondaryTextColorStyle 
 } from '../styles/common.styles';
 
-// 添加一个日期格式化函数
+// Function to format date
 const formatDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
