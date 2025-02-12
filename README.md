@@ -48,7 +48,7 @@ cd [project-directory]
 2. Start the backend services using Docker Compose
 ```bash
 # Start all services (PostgreSQL, Backend, Frontend)
-docker-compose up -d
+docker-compose up 
 
 # Check the status of the containers
 docker-compose ps
