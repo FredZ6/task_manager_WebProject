@@ -47,63 +47,68 @@ cd [project-directory]
 
 2. Start the backend services using Docker Compose
 ```bash
-# Navigate to the backend directory
-cd backend
+# Start all services (PostgreSQL, Backend, Frontend)
+docker-compose up -d
 
-# Build and start the containers
-docker-compose up --build -d
+# Check the status of the containers
+docker-compose ps
 
-# Check the running containers
-docker ps
-
-# Check logs if needed
+# View logs if needed
 docker-compose logs -f
 ```
 
-3. Start the frontend development server
-```bash
-# Navigate to the frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start the development server
-npm start
-```
-
-4. Access the application
+3. Access the application
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8080
 
+### Port Configuration
+- PostgreSQL: 5433 (Host) -> 5432 (Container)
+- Backend: 8080
+- Frontend: 3000
+
+### Environment Variables
+#### Database
+```
+POSTGRES_USER: my_docker_user
+POSTGRES_PASSWORD: my_docker_password
+POSTGRES_DB: my_database
+```
+
+#### Backend
+```
+SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/my_database
+SPRING_DATASOURCE_USERNAME: my_docker_user
+SPRING_DATASOURCE_PASSWORD: my_docker_password
+```
+
 ### Docker Commands
-
-#### Common Docker Commands
 ```bash
-# Stop the containers
-docker-compose down
-
-# Rebuild and restart containers
+# Build and start all services
 docker-compose up --build -d
 
-# View container logs
-docker-compose logs -f
+# Stop all services
+docker-compose down
 
 # Remove all containers and volumes
 docker-compose down -v
+
+# View logs for specific service
+docker-compose logs -f [service-name]  # backend, frontend, or db
+
+# Restart a specific service
+docker-compose restart [service-name]
 ```
 
-#### Database Access
-```bash
-# Access PostgreSQL database
-docker exec -it db psql -U my_docker_user -d my_database
+### Troubleshooting
+1. If the database connection fails:
+   - Check if PostgreSQL container is running: `docker-compose ps`
+   - Verify database credentials in docker-compose.yml
+   - Check backend logs: `docker-compose logs backend`
 
-# Backup database
-docker exec -t db pg_dump -U my_docker_user my_database > backup.sql
-
-# Restore database
-docker exec -i db psql -U my_docker_user -d my_database < backup.sql
-```
+2. If the frontend can't connect to backend:
+   - Ensure backend is running and accessible
+   - Check CORS configuration in backend
+   - Verify API_URL in frontend configuration
 
 ## API Endpoints
 
